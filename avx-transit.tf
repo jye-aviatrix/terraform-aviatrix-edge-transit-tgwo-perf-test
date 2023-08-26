@@ -15,4 +15,5 @@ module "region1_mc_transit" {
   ha_gw                  = var.ha_gw
   enable_segmentation    = var.enable_segmentation
   hybrid_connection = true # Sign of readiness for TGW connection
+  single_az_ha = false
 }

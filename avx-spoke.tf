@@ -12,6 +12,7 @@ module "region1_mc_spoke" {
   ha_gw              = var.ha_gw
   transit_gw         = module.region1_mc_transit.transit_gateway.gw_name
   instance_size = var.instance_size
+  single_az_ha = false
 }
 
 module "avx_spoke_vm_az1" {
