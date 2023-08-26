@@ -69,7 +69,7 @@ output "az2" {
   value = [
     for idx, subnet in var.tgw_spoke_cidrs : {
       avx_ssh=module.avx_spoke_vm_az2[idx].ssh
-      avx_iperf="iperf3 -c ${module.tgw_spoke_vm_az2[idx].private_ip} -t 120 -P 10 -M 9000"
+      avx_iperf="iperf3 -c ${module.tgw_spoke_vm_az2[idx].private_ip} -t 120 -P 20"
       tgw_ssh= module.tgw_spoke_vm_az2[idx].ssh
       tgw_iperf="iperf3 -s"
     }
