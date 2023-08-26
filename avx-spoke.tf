@@ -30,17 +30,17 @@ module "avx_spoke_vm_az1" {
 #   value = module.avx_spoke_vm_az1
 # }
 
-# module "avx_spoke_vm_az2" {
-#   source  = "jye-aviatrix/aws-linux-vm-public/aws"
-#   version = "2.0.4"
-#   count = length(var.avx_spoke_cidrs)
-#   key_name = var.key_name
-#   vm_name = "${var.region1_code}-spoke-${count.index+1}-az2"
-#   vpc_id = module.region1_mc_spoke[count.index].vpc.vpc_id
-#   subnet_id = module.region1_mc_spoke[count.index].vpc.public_subnets[1].subnet_id
-#   instance_type = var.instance_size
-#   use_eip = true
-# }
+module "avx_spoke_vm_az2" {
+  source  = "jye-aviatrix/aws-linux-vm-public/aws"
+  version = "2.0.4"
+  count = length(var.avx_spoke_cidrs)
+  key_name = var.key_name
+  vm_name = "${var.region1_code}-spoke-${count.index+1}-az2"
+  vpc_id = module.region1_mc_spoke[count.index].vpc.vpc_id
+  subnet_id = module.region1_mc_spoke[count.index].vpc.public_subnets[1].subnet_id
+  instance_type = var.instance_size
+  use_eip = true
+}
 
 # output "avx_spoke_vm_az2" {
 #   value = module.avx_spoke_vm_az2
