@@ -32,6 +32,7 @@ module "tgw_spoke_vm_az1" {
   subnet_id = aviatrix_vpc.aws_vpc[count.index].public_subnets[0].subnet_id
   instance_type = var.instance_size
   use_eip = true
+  depends_on = [ module.region1_mc_spoke ]
 }
 
 # output "tgw_spoke_vm_az1" {
@@ -48,6 +49,7 @@ module "tgw_spoke_vm_az2" {
   subnet_id = aviatrix_vpc.aws_vpc[count.index].public_subnets[1].subnet_id
   instance_type = var.instance_size
   use_eip = true
+  depends_on = [ module.region1_mc_spoke ]
 }
 
 # output "tgw_spoke_vm_az2" {
@@ -61,6 +63,7 @@ output "az1" {
       avx_iperf="iperf3 -c ${module.tgw_spoke_vm_az1[idx].private_ip} -t 120 -P 20"
       tgw_ssh= module.tgw_spoke_vm_az1[idx].ssh
       tgw_iperf="iperf3 -s"
+      reverse= "iperf3 -c ${module.avx_spoke_vm_az1[idx].private_ip} -t 120 -P 20"
     }
   ]
 }
@@ -72,6 +75,7 @@ output "az2" {
       avx_iperf="iperf3 -c ${module.tgw_spoke_vm_az2[idx].private_ip} -t 120 -P 20"
       tgw_ssh= module.tgw_spoke_vm_az2[idx].ssh
       tgw_iperf="iperf3 -s"
+      reverse= "iperf3 -c ${module.avx_spoke_vm_az2[idx].private_ip} -t 120 -P 20"
     }
   ]
 }
