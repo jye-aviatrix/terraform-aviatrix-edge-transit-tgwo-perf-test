@@ -34,6 +34,44 @@ module "tgw_spoke_vm_az1" {
   use_eip = true
 }
 
-output "tgw_spoke_vm_az1" {
-  value = module.tgw_spoke_vm_az1
+# output "tgw_spoke_vm_az1" {
+#   value = module.tgw_spoke_vm_az1
+# }
+
+# module "tgw_spoke_vm_az2" {
+#   source  = "jye-aviatrix/aws-linux-vm-public/aws"
+#   version = "2.0.4"
+#   count = length(var.tgw_spoke_cidrs)
+#   key_name = var.key_name
+#   vm_name = "${var.region1_code}-tgw-spoke-${count.index+1}-az2"
+#   vpc_id = aviatrix_vpc.aws_vpc[count.index].vpc_id
+#   subnet_id = aviatrix_vpc.aws_vpc[count.index].public_subnets[1].subnet_id
+#   instance_type = var.instance_size
+#   use_eip = true
+# }
+
+# output "tgw_spoke_vm_az2" {
+#   value = module.tgw_spoke_vm_az2
+# }
+
+output "az1" {
+  value = [
+    for idx, subnet in var.tgw_spoke_cidrs : {
+      avx_ssh=module.avx_spoke_vm_az1[idx].ssh
+      avx_iperf="iperf3 -c ${module.tgw_spoke_vm_az1[idx].private_ip} -t 120 -P 10 -M 9000"
+      tgw_ssh= module.tgw_spoke_vm_az1[idx].ssh
+      tgw_iperf="iperf3 -s"
+    }
+  ]
 }
+
+# output "az2" {
+#   value = [
+#     for idx, subnet in var.tgw_spoke_cidrs : {
+#       avx_ssh=module.avx_spoke_vm_az2[idx].ssh
+#       avx_iperf="iperf3 -c ${module.tgw_spoke_vm_az2[idx].private_ip} -t 120 -P 10 -M 9000"
+#       tgw_ssh= module.tgw_spoke_vm_az2[idx].ssh
+#       tgw_iperf="iperf3 -s"
+#     }
+#   ]
+# }

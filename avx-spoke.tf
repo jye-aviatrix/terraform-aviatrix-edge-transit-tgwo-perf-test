@@ -26,9 +26,9 @@ module "avx_spoke_vm_az1" {
   use_eip = true
 }
 
-output "avx_spoke_vm_az1" {
-  value = module.avx_spoke_vm_az1
-}
+# output "avx_spoke_vm_az1" {
+#   value = module.avx_spoke_vm_az1
+# }
 
 # module "avx_spoke_vm_az2" {
 #   source  = "jye-aviatrix/aws-linux-vm-public/aws"
@@ -41,8 +41,6 @@ output "avx_spoke_vm_az1" {
 #   instance_type = var.instance_size
 #   use_eip = true
 # }
-
-
 
 # output "avx_spoke_vm_az2" {
 #   value = module.avx_spoke_vm_az2
